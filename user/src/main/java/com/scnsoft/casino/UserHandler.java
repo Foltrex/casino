@@ -11,6 +11,7 @@ import reactor.core.publisher.Mono;
 
 @Component
 public record UserHandler(UserService userService) {
+    
     public Mono<ServerResponse> findAll(ServerRequest request) {
         return ServerResponse.ok().body(userService.findAll(), User.class);
     }    

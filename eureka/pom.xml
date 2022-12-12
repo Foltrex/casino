@@ -12,12 +12,20 @@
   <version>1.0-SNAPSHOT</version>
   <name>eureka</name>
   <url>http://maven.apache.org</url>
+
+  <properties>
+    <jib-maven-plugin.version>2.5.0</jib-maven-plugin.version>
+    <docker.image.prefix>gredel</docker.image.prefix>
+    <project.artifactId>1.0-SNAPSHOT</project.artifactId>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
     </dependency>
   </dependencies>
+
   <build>
     <plugins>
         <plugin>
@@ -26,6 +34,28 @@
             <configuration>
               <skip>false</skip>
             </configuration>
+        </plugin>
+        
+        <!-- mvn compile jib:build -->
+        <plugin>
+          <groupId>com.google.cloud.tools</groupId>
+          <artifactId>jib-maven-plugin</artifactId>
+          <version>${jib-maven-plugin.version}</version>
+          <configuration>
+            <from>
+              <!-- <image>openjdk@sha256:2fd12c42c12bf707f7ac0f5fa630ff9c59868dfc4428daaf34df9d82a0c5b101</image> -->
+              <image>openjdk:17</image>
+            </from>
+            <to>
+              <image>docker.io/${docker.image.prefix}/casino-eureka</image>
+            </to>
+            <container>
+              <ports>
+                <port>8761</port>
+              </ports>
+              <mainClass>com.scnsoft.casino.EurekaApplication</mainClass>
+            </container>
+          </configuration>
         </plugin>
     </plugins>
   </build>

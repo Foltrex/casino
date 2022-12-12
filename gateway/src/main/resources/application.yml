@@ -1,0 +1,13 @@
+server:
+  port: 8080
+
+spring:
+    cloud:
+        gateway:
+            routes:
+              - id: user-service
+                uri: ${rewrite.backend.uri:http://localhost:8085}
+                predicates:
+                  - Path=/user-service/**
+                filters:
+                  - RewritePath=/user-service/(?<segment>.*),/$\{segment}
