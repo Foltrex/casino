@@ -31,10 +31,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-mongodb-reactive</artifactId>
-    </dependency>
   </dependencies>
 
   <build>
@@ -52,8 +48,11 @@
         <artifactId>jib-maven-plugin</artifactId>
         <version>${jib-maven-plugin.version}</version>
         <configuration>
-          <from>
+          <!-- <from>
             <image>openjdk@sha256:2fd12c42c12bf707f7ac0f5fa630ff9c59868dfc4428daaf34df9d82a0c5b101</image>
+          </from> -->
+          <from>
+            <image>gcr.io/distroless/java17-debian11</image>
           </from>
           <to>
             <image>docker.io/${docker.image.prefix}/casino-gateway</image>
