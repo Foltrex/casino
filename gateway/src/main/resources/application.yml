@@ -1,0 +1,36 @@
+server:
+  port: 8080
+
+spring:
+    application:
+      name: gateway
+    cloud:
+        gateway:
+            routes:
+              - id: user-service
+                uri: ${rewrite.backend.uri:http://localhost:8085}
+                predicates:
+                  - Path=/user-service/**
+                filters:
+                  - RewritePath=/user-service/(?<segment>.*),/$\{segment}
+
+eureka:
+    instance:
+        prefer-ip-address: true
+    client:
+        service-url:
+            defaultZone: http://192.168.16.3:8761/eureka
+            fetch-registry: true
+            register-with-eureka: true
+        # fetch-registry: false
+        # register-with-eureka: false
+        # enabled: true
+
+logging:
+    level:
+        reactor:
+            netty: INFO
+        org:
+            springframework:
+                cloud:
+                    gateway: INFO

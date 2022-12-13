@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.scnsoft.casino</groupId>
+    <artifactId>casino</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+  <groupId>com.scnsoft.casino</groupId>
+  <artifactId>eureka</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <name>eureka</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <jib-maven-plugin.version>2.5.0</jib-maven-plugin.version>
+    <docker.image.prefix>gredel</docker.image.prefix>
+    <project.artifactId>1.0-SNAPSHOT</project.artifactId>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <configuration>
+              <skip>false</skip>
+            </configuration>
+        </plugin>
+        
+        <!-- mvn compile jib:build -->
+        <plugin>
+          <groupId>com.google.cloud.tools</groupId>
+          <artifactId>jib-maven-plugin</artifactId>
+          <version>${jib-maven-plugin.version}</version>
+          <configuration>
+            <!-- <image>openjdk@sha256:2fd12c42c12bf707f7ac0f5fa630ff9c59868dfc4428daaf34df9d82a0c5b101</image> -->
+            <!-- <from>
+              <image>openjdk:17</image>
+            </from> -->
+            <from>
+              <image>gcr.io/distroless/java17-debian11</image>
+            </from>
+            <to>
+              <image>docker.io/${docker.image.prefix}/casino-eureka</image>
+            </to>
+            <container>
+              <ports>
+                <port>8761</port>
+              </ports>
+              <mainClass>com.scnsoft.casino.EurekaApplication</mainClass>
+            </container>
+          </configuration>
+        </plugin>
+    </plugins>
+  </build>
+</project>
