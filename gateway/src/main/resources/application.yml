@@ -1,19 +1,6 @@
 server:
   port: 8080
 
-spring:
-    application:
-      name: gateway
-    cloud:
-        gateway:
-            routes:
-              - id: user-service
-                uri: ${rewrite.backend.uri:http://localhost:8085}
-                predicates:
-                  - Path=/user-service/**
-                filters:
-                  - RewritePath=/user-service/(?<segment>.*),/$\{segment}
-
 eureka:
     instance:
         prefer-ip-address: true
@@ -25,6 +12,20 @@ eureka:
         # fetch-registry: false
         # register-with-eureka: false
         # enabled: true
+
+spring:
+    application:
+      name: gateway-service
+    cloud:
+        gateway:
+            routes:
+              - id: user-service
+                uri: lb://USER-SERVICE/
+                predicates:
+                  - Path=/user-service/**
+                filters:
+                  - RewritePath=/user-service/(?<segment>.*),/$\{segment}
+
 
 logging:
     level:

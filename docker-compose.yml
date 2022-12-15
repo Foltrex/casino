@@ -33,6 +33,30 @@ services:
     networks:
       - rabbitmq_net
       
+  eureka:
+    image: gredel/casino-eureka:latest
+    ports:
+      - 8761:8761
+    restart: always
+    networks:
+      casino-network:
+        ipv4_address: 192.168.16.3
+    healthcheck:
+      test: "curl -f http://localhost:8761/"
+      interval: 2s
+      timeout: 30s
+      retries: 15
+      
+  gateway:
+    image: gredel/casino-gateway:latest
+    ports:
+      - 8080:8080
+    restart: on-failure
+    depends_on:
+      eureka:
+        condition: service_healthy
+    networks:
+      - casino-network
   # eureka:
   #   image: gredel/casino-eureka:latest
   #   ports:
@@ -50,6 +74,10 @@ services:
 networks:
   rabbitmq_net:
     driver: bridge
+  casino-network:
+    ipam:
+      config:
+        - subnet: 192.168.16.0/16
 
 volumes:
   data: {}
