@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableRabbit
 public class InvoiceConfiguration {
-    private static final String QUEUE_NAME = "scnsoft.queue";
+    private static final String QUEUE_NAME = "bet.queue";
 
     // http
 
@@ -25,7 +25,7 @@ public class InvoiceConfiguration {
 
     @RabbitListener(queues = QUEUE_NAME)
     public void processBetQueue(Bet bet) {
-        betService.save(bet);
+        betService.save(bet).subscribe();
         // WebClient client = WebClient.create();
     }
 }

@@ -15,7 +15,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 
 @Configuration
 public class BetConfiguration {
-    private final static String QUEUE_NAME = "scnsoft.queue";
+    private final static String QUEUE_NAME = "bet.queue";
     
     @Bean
     public RouterFunction<ServerResponse> routes(BetHandler betHandler) {
