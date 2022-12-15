@@ -5,7 +5,7 @@ spring:
         active: 'dev'
     data:
         mongodb:
-            database: scnsoft
+            database: user_db
             port: 27017
             host: localhost
 

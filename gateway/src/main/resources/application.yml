@@ -20,11 +20,25 @@ spring:
         gateway:
             routes:
               - id: user-service
-                uri: lb://USER-SERVICE/
+                uri: lb://USER-SERVICE
                 predicates:
                   - Path=/user-service/**
                 filters:
                   - RewritePath=/user-service/(?<segment>.*),/$\{segment}
+              
+              - id: bet-service
+                uri: lb://BET-SERVICE
+                predicates:
+                  - Path=/bet-service/**
+                filters:
+                  - RewritePath=/bet-service/(?<segment>.*),/$\{segment}
+
+              - id: invoice-service
+                uri: lb://INVOICE-SERVICE
+                predicates:
+                  - Path=/invoice-service/**
+                filters:
+                  - RewritePath=/invoice-service/(?<segment>.*),/$\{segment}
 
 
 logging:
