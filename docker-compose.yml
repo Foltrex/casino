@@ -33,19 +33,19 @@ services:
     networks:
       - rabbitmq_net
       
-  eureka:
-    image: gredel/casino-eureka:latest
-    ports:
-      - 8761:8761
-    restart: always
+  # eureka:
+  #   image: gredel/casino-eureka:latest
+  #   ports:
+  #     - 8761:8761
+  #   restart: always
     
-  gateway:
-    image: gredel/casino-gateway:latest
-    ports:
-      - 8080:8080
-    restart: always
-    depends_on:
-      - eureka
+  # gateway:
+  #   image: gredel/casino-gateway:latest
+  #   ports:
+  #     - 8080:8080
+  #   restart: always
+  #   depends_on:
+  #     - eureka
 
 networks:
   rabbitmq_net:

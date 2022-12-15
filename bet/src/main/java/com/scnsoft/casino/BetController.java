@@ -3,6 +3,7 @@ package com.scnsoft.casino;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 @RestController
-public class BetController {
+public record BetController(
+    AmqpTemplate amqpTemplate,
+    @Value("${javainuse.rabbitmq.exchange}") String exchange,
+    @Value("${javainuse.rabbitmq.routingkey}") String routingkey
+) {
     private static final String USER_ID = "user";
     private static final String BET_ID = "currentBet";
     private static final String MONEY_AMOUNT = "money";
@@ -20,8 +25,9 @@ public class BetController {
     @Value("${app.winrate:0.5}")
     private static double WINRATE;
 
+
     @PostMapping("/bet")
-    public BetDto makeBet(@RequestBody ObjectNode json) {
+    public void makeBet(@RequestBody ObjectNode json) {
         String userIdString = json.get(USER_ID).asText();
         UUID userId = UUID.fromString(userIdString);
 
@@ -31,21 +37,25 @@ public class BetController {
         String moneyAmountString = json.get(MONEY_AMOUNT).asText();
         BigDecimal moneyAmount = new BigDecimal(moneyAmountString);
 
+        BetDto bet = null;
         if (Math.random() > WINRATE) {
             UUID newBetId = UUID.randomUUID();
-            return BetDto.builder()
+            BigDecimal moneyAmountAfterWinning = moneyAmount.multiply(BigDecimal.valueOf(2));
+            bet = BetDto.builder()
                     .currentBet(newBetId)
                     .previousBet(currentBetId)
-                    .money(moneyAmount)
+                    .money(moneyAmountAfterWinning)
                     .user(userId)
                     .build();
         } else {
-            return BetDto.builder()
+            bet = BetDto.builder()
                 .currentBet(currentBetId)
                 .previousBet(currentBetId)
-                .money(moneyAmount)
+                .money(BigDecimal.ZERO)
                 .user(userId)
                 .build();
         }
+        
+        // amqpTemplate.convertAndSend(QUEUE, bet);
     }
 }

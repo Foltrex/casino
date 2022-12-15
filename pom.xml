@@ -37,8 +37,14 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <!-- <dependency>
+        <groupId>org.springframework.amqp</groupId>
+        <artifactId>spring-rabbit</artifactId>
+        <version>1.4.5.RELEASE</version>
+      </dependency> -->
     </dependencies>
   </dependencyManagement>
+
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -52,7 +58,12 @@
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
     </dependency>
+    <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
+		</dependency>
   </dependencies>
+
   <build>
     <pluginManagement>
       <plugins>
