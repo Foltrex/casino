@@ -8,9 +8,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public record Bet(
-    @Id UUID currentBet, 
-    UUID previousBet, 
+    @Id UUID currentBetId, 
+    UUID previousBetId, 
     BigDecimal money, 
-    UUID user
+    UUID userId
 ) {
 }

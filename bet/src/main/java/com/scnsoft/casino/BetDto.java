@@ -11,9 +11,9 @@ import lombok.Builder;
 // @Document
 @Builder
 public record BetDto(
-    UUID currentBet, 
-    UUID previousBet, 
+    UUID currentBetId, 
+    UUID previousBetId, 
     BigDecimal money, 
-    UUID user
+    UUID userId
 ) {
 }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Casino 777</h1>
+        <p th:text="'user id: ' + ${userId}"></p>
+    </div>
+    <table>
+        <tr>
+            <th>CURRENT BET</th>
+            <th>PREVIOUS BET</th>
+            <th>MONEY</th>
+        </tr>
+        <tr th:each="bet : ${bets}">
+            <td th:text="${bet.currentBetId}"></td>
+            <td th:text="${bet.previousBetId}"></td>
+            <td th:text="${bet.money}"></td>
+        </tr>
+    </table>
+</body>
+
+</html>

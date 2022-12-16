@@ -8,6 +8,7 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.integration.IntegrationProperties.RSocket.Server;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
@@ -26,8 +27,7 @@ public record BetHandler(
         return request.bodyToMono(BetDto.class)
             .flatMap(betDto -> calculateWinnings(betDto))
             .flatMap(newBet -> {
-                URI location = URI.create("/bets/" + newBet.currentBet());
-                return ServerResponse.created(location).build();
+                return ServerResponse.ok().body(Mono.just(newBet), BetDto.class);
             });
     }
 
@@ -38,17 +38,17 @@ public record BetHandler(
             BigDecimal moneyAmount = betDto.money();
             BigDecimal moneyAmountAfterWinning = moneyAmount.multiply(BigDecimal.valueOf(2));
             bet = BetDto.builder()
-                    .currentBet(newBetId)
-                    .previousBet(betDto.currentBet())
+                    .currentBetId(newBetId)
+                    .previousBetId(betDto.currentBetId())
                     .money(moneyAmountAfterWinning)
-                    .user(betDto.user())
+                    .userId(betDto.userId())
                     .build();
         } else {
             bet = BetDto.builder()
-                .currentBet(newBetId)
-                .previousBet(betDto.currentBet())
+                .currentBetId(newBetId)
+                .previousBetId(betDto.currentBetId())
                 .money(BigDecimal.ZERO)
-                .user(betDto.user())
+                .userId(betDto.userId())
                 .build();
         }
         
