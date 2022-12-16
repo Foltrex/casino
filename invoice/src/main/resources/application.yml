@@ -1,6 +1,11 @@
 spring:
     application:
-        name: invoice
+        name: invoice-service
+    data:
+        mongodb:
+            database: invoice_db
+            port: 27017
+            host: localhost
     profiles:
         active: 'dev'
 

@@ -27,8 +27,7 @@ public record UserHandler(UserService userService) {
         return request.bodyToMono(User.class)
             .flatMap(user -> userService.save(user))
             .flatMap(persistedUser -> {
-                URI location = URI.create("/users/" + persistedUser.id());
-                return ServerResponse.created(location).build();
+                return ServerResponse.ok().body(persistedUser, User.class);
             });
     }
 }

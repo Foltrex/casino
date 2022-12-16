@@ -1,11 +1,11 @@
 spring:
     application:
-        name: user
+        name: user-service
     profiles:
         active: 'dev'
     data:
         mongodb:
-            database: scnsoft
+            database: user_db
             port: 27017
             host: localhost
 
